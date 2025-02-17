@@ -21,6 +21,9 @@ ph_inputs_values = np.array([pCO2,          # Partial pressure of CO2 in the rum
                              CLa,           # Concentration of Lactic acid in the rumen.
                              CAm])          # Concentration of Ammonia in the rumen.
 
+
+# As we used numba @njit to accelerate simulations, it does not allow the use of external solvers
+#  for determining pH (e.g., Scipy, Numpy...), and therefore, manual implementation of the secant method was used.
 @njit
 def secant_method(f, x0, x1, ph_inputs, tol=0.5e-4, max_iterations=8000):
     for n in range(max_iterations):
